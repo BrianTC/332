@@ -110,6 +110,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="csv_load.cpp" />
+    <ClCompile Include="driver.cpp" />
+    <ClCompile Include="proc_algorithim.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="csv_load.h" />
+    <ClInclude Include="proc_algorithim.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ProcScheduler.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
