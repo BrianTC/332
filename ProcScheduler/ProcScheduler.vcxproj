@@ -122,6 +122,9 @@
   <ItemGroup>
     <Text Include="Text.csv" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CS332-104ProjectSpring2017.pdf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
