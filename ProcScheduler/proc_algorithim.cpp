@@ -47,16 +47,60 @@ ostringstream* proc_algorithim::shortestProcNext(csv_load a) {
 
 	}//END WHILE
 	return printOut;
-	//TODO;
-	//roundRobinAlgorithim
 }
 
+//HRRN Priority = 1 + WAIT_TIME/RUN_TIM
 ostringstream* proc_algorithim::HRRN(csv_load a) {
+	ostringstream *printOut = new ostringstream();
+	*printOut << "HRRN:\n";
+	vector<csv_load::proc> procList = a.csv_getProcList();
+	int clock = 0;
+	vector<csv_load::proc> cProcList;
+	while (procList.size() > 0 || cProcList.size() > 0) {
+		//Queue processes ready to be run
+		for (size_t i = 0; i < procList.size(); i++) {
+			if (procList[i].t_start <= clock) {
+				cProcList.push_back(procList[i]);
+				procList.erase(procList.begin() + i);
+				i--;
+			}
+		}
+		//cout << cProcList.size() << endl;
+		//Select Next Process to run
+		csv_load::proc selectedProc;
+		int selectedIndex = 0;
+		double highestRatio;
+		for (size_t i = 0; i < cProcList.size(); i++) {
+			double currRatio = 1+(clock-cProcList[i].t_start)/cProcList[i].t_run;
+			if (i == 0) {
+				highestRatio = currRatio;
+			}
+			else if (currRatio > highestRatio) {
+				highestRatio = currRatio;
+				selectedIndex = i;
+			}
+		}
+		//"Run" the selected process, or just wait till a process is submitted
+		if (cProcList.size()>0) {
+			selectedProc = cProcList[selectedIndex];
+			cProcList.erase(cProcList.begin() + selectedIndex);
+			//std::cout << shortestProcess.pid;
+			for (int i = 0; i < selectedProc.t_run; i++) {
+				*printOut << "Cycle: " << setw(IOWIDTH) << clock << " PID: " << selectedProc.pid << endl;
+				clock++;
+			}
+		}
+		else {
+			*printOut << "Cycle: " << setw(IOWIDTH) << clock << " EMPTY CYCLE" << endl;
+			clock++;
+		}
 
+	}//END WHILE
+	return printOut;
 }
 ostringstream* proc_algorithim::roundRobin(csv_load a) {
-
+	return nullptr;
 }
 ostringstream* proc_algorithim::feedback(csv_load a) {
-
+	return nullptr;
 }

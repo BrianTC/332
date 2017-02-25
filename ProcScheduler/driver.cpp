@@ -1,4 +1,4 @@
-#ifdef _WIN32{
+#ifdef _WIN32
 	const bool pause = true;
 
 #else
@@ -15,6 +15,8 @@ int main() {
 		csv_load a = csv_load("Text.csv");
 		cout << "LOAD" << endl;
 		cout << proc_algorithim::shortestProcNext(a)->str();
+		cout << endl;
+		cout << proc_algorithim::HRRN(a)->str();
 	}
 	catch (const exception &e) {
 		cout << "Check Input File"<<endl;
