@@ -7,6 +7,7 @@
 //}
 vector<string> pid;
 vector<int> t_start, t_end;
+vector<csv_load::proc> procList;
 ifstream *file;
 int index;
 using namespace std;
@@ -44,8 +45,17 @@ csv_load::csv_load(string filename)
 			//this is the initial loading of items into arrays
 			if (tmp.size() == 3) {
 				pid.push_back(tmp[0]);
-				t_start.push_back(stoi(tmp[1]));
-				t_end.push_back(stoi(tmp[2]));
+				t_start.push_back(stoi(tmp[2]));
+				t_end.push_back(stoi(tmp[1]));
+
+				csv_load::proc tProc;
+				tProc.pid = tmp[0];
+				//cout << tProc.pid;
+				tProc.t_start = stoi(tmp[2]);
+				//cout << tProc.t_start;
+				tProc.t_run = stoi(tmp[1]);
+				//cout << tProc.t_end;
+				procList.push_back(tProc);
 			}
 			else {
 				cerr << "INPUT ERROR, File not in ID,S,E format on line: " << line_no << endl;
@@ -64,12 +74,17 @@ csv_load::csv_load(string filename)
 csv_load::~csv_load()
 {
 }
-vector<string> csv_get_pid() {
+vector<string> csv_load::csv_get_pid() {
 	return pid;
 }
-vector<int> csv_get_tstart() {
+vector<int> csv_load::csv_get_tstart() {
 	return t_start;
 }
-vector<int> csv_get_tend() {
+vector<int> csv_load::csv_get_trun() {
 	return t_end;
+}
+
+vector<csv_load::proc> csv_load::csv_getProcList()
+{
+	return procList;
 }
