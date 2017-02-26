@@ -7,8 +7,9 @@ class proc_algorithim{
 	private:
 		static const int IOWIDTH = 4;
 	public:
-		static ostringstream* roundRobin(csv_load a);
-		static ostringstream* HRRN(csv_load a);//Highest response ratio next
+		static ostringstream* HRRN(csv_load a);
+		static ostringstream * roundRobin(csv_load a, unsigned int quanta);
+		//Highest response ratio next
 		static ostringstream* feedback(csv_load a);
 		static ostringstream* shortestProcNext(csv_load a);
 };

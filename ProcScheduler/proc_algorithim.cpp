@@ -98,9 +98,52 @@ ostringstream* proc_algorithim::HRRN(csv_load a) {
 	}//END WHILE
 	return printOut;
 }
-ostringstream* proc_algorithim::roundRobin(csv_load a) {
-	return nullptr;
+
+ostringstream* proc_algorithim::roundRobin(csv_load a,unsigned int quanta=0) {
+	ostringstream *printOut = new ostringstream();
+	*printOut << "RoundRobin:\n";
+	vector<csv_load::proc> procList = a.csv_getProcList();
+	//if quanta is <= zero determing the average process time and use that as the quanta
+	if(quanta<-0){
+		for (size_t i = 0; i < procList.size(); i++) {
+			quanta += procList[i].t_run;
+		}
+		quanta /= procList.size();
+	}
+	int clock = 0;
+	size_t procIndex = 0;
+	vector<csv_load::proc> cProcList;
+	while (procList.size() > 0 || cProcList.size() > 0) {
+		//Queue processes ready to be run
+		for (size_t i = 0; i < procList.size(); i++) {
+			if (procList[i].t_start <= clock) {
+				cProcList.push_back(procList[i]);
+				procList.erase(procList.begin() + i);
+				i--;
+			}
+		}
+		//cout << "Quanta Cycle:" << endl;
+		for (size_t i = 0; i < quanta; i++) {
+			if (cProcList.size() == 0) {
+				*printOut << "Cycle: " << setw(IOWIDTH) << clock << " EMPTY CYCLE" << endl;
+				clock++;
+				break;
+			}
+			//cout << "cProcListSize: " << cProcList.size() << " procIndex: " << procIndex << endl;
+			*printOut << "Cycle: " << setw(IOWIDTH) << clock << " PID: " << cProcList[procIndex].pid << endl;
+			//Remove process and increment counter
+			if (--cProcList[procIndex].t_run == 0) {
+				cProcList.erase(cProcList.begin() + procIndex);
+				procIndex = procIndex >= cProcList.size() ? 0 : procIndex;
+			}
+			clock++;
+			
+		}
+		procIndex = procIndex+1 >= cProcList.size() ? 0 : procIndex+1;
+	}//END WHILE
+	return printOut;
 }
+
 ostringstream* proc_algorithim::feedback(csv_load a) {
 	return nullptr;
 }

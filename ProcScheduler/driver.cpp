@@ -17,6 +17,8 @@ int main() {
 		cout << proc_algorithim::shortestProcNext(a)->str();
 		cout << endl;
 		cout << proc_algorithim::HRRN(a)->str();
+		cout << endl;
+		cout << proc_algorithim::roundRobin(a,2)->str();
 	}
 	catch (const exception &e) {
 		cout << "Check Input File"<<endl;
